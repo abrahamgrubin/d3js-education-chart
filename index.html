@@ -2,7 +2,8 @@
   <head>
   </head>
   <body>
-    <h1 id="name">Boston Public School Data</h1>
+    <h1 class="name"></h1>
+    <h1 class"name"></h1>
     <style>
       #base {
       }
@@ -14,34 +15,38 @@
     <script src="education.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script>
-      var proposedData = [
-        education_json.operating_budget.data[0]['fy+1'],
-        education_json.operating_budget.data[0]['fy-0'],
-        education_json.operating_budget.data[0]['fy-1'],
-        education_json.operating_budget.data[0]['fy-2']
-      ];
-      var total = [
-        education_json.operating_budget.data[1]['fy+1'],
-        education_json.operating_budget.data[1]['fy-0'],
-        education_json.operating_budget.data[1]['fy-1'],
-        education_json.operating_budget.data[1]['fy-2']
-      ];
+      var width = "100%";
+      var height = "600px";
+      var externalFunds = education_json.external_funds_budget.data;
+      var operatingBudget = education_json.operating_budget.data;
+      var thisYearsData = [];
+      var lastYearsData = [];
+
+      externalFunds.forEach(function(budget){
+          var count = 1;
+          if (budget['fy-0'] != 0){
+              count * 20;
+              count++;
+              thisYearsData.push(budget['fy-0']);
+          }
+      });
+      console.log(thisYearsData);
       var svg = d3.select("body")
               .append('svg')
-              .attr("height", "200px")
-              .attr("width", "200px")
+              .attr("height", height)
+              .attr("width", width)
               .attr("id", "base");
       var circles = svg.selectAll("circle")
-                .data(proposedData)
+                .data(thisYearsData)
                 .enter()
                 .append("circle")
-      var circleAttributes = circles.attr("cx", 40)
-                             .attr("cy", 40)
-                             .attr("r", 20)
-                             .attr("class", "hello")
-        ;
+
+      var circleAttributes = circles.attr("cx", function(d) { return d / 10000})
+                              .attr("cy", 100)
+                              .attr("class", "hello")
+                              .attr("r", function(d) { return d / 100000});
       console.log(education_json.operating_budget.data[1]);
-      document.getElementById('name').innerHTML = education_json.operating_budget.data[0].name + " " + "Budget"
+      document.getElementsByClassName('name')[0].innerHTML = education_json.operating_budget.data[0].name + " " + "Budget"
     </script>
 
   </body>
