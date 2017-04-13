@@ -1,22 +1,48 @@
 <html>
   <head>
-    <link rel="stylesheet" href="style.css">
   </head>
   <body>
+    <h1 id="name">Boston Public School Data</h1>
     <style>
       #base {
-        background: #000;
+      }
+      .hello {
+        stroke: #ff0000;
+        fill: #ff0000;
       }
     </style>
     <script src="education.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script>
+      var proposedData = [
+        education_json.operating_budget.data[0]['fy+1'],
+        education_json.operating_budget.data[0]['fy-0'],
+        education_json.operating_budget.data[0]['fy-1'],
+        education_json.operating_budget.data[0]['fy-2']
+      ];
+      var total = [
+        education_json.operating_budget.data[1]['fy+1'],
+        education_json.operating_budget.data[1]['fy-0'],
+        education_json.operating_budget.data[1]['fy-1'],
+        education_json.operating_budget.data[1]['fy-2']
+      ];
       var svg = d3.select("body")
               .append('svg')
               .attr("height", "200px")
               .attr("width", "200px")
               .attr("id", "base");
-              console.log(education_json);
+      var circles = svg.selectAll("circle")
+                .data(proposedData)
+                .enter()
+                .append("circle")
+      var circleAttributes = circles.attr("cx", 40)
+                             .attr("cy", 40)
+                             .attr("r", 20)
+                             .attr("class", "hello")
+        ;
+      console.log(education_json.operating_budget.data[1]);
+      document.getElementById('name').innerHTML = education_json.operating_budget.data[0].name + " " + "Budget"
     </script>
+
   </body>
 </html>
