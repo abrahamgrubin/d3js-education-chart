@@ -750,15 +750,15 @@ var education_json = {
         "fy-1":0,
         "fy-0":0,
         "fy+1":0
-      },
-      {
-        "name":"Total",
-        "line_type":"total",
-        "fy-2":130369380,
-        "fy-1":125769705,
-        "fy-0":135341294,
-        "fy+1":137222587
       }
+      // {
+      //   "name":"Total",
+      //   "line_type":"total",
+      //   "fy-2":130369380,
+      //   "fy-1":125769705,
+      //   "fy-0":135341294,
+      //   "fy+1":137222587
+      // }
     ]
   },
   "selected_service_indicators":[

@@ -2,8 +2,7 @@
   <head>
   </head>
   <body>
-    <h1 class="name"></h1>
-    <h1 class"name"></h1>
+    <div id="main"><svg></svg></div>
     <style>
       #base {
       }
@@ -27,26 +26,97 @@
           if (budget['fy-0'] != 0){
               count * 20;
               count++;
-              thisYearsData.push(budget['fy-0']);
+              thisYearsData.push({ 'fy2017': budget['fy-0'], 'name': budget['name'], 'id': count});
           }
       });
-      console.log(thisYearsData);
-      var svg = d3.select("body")
-              .append('svg')
-              .attr("height", height)
-              .attr("width", width)
-              .attr("id", "base");
-      var circles = svg.selectAll("circle")
-                .data(thisYearsData)
+
+      function bubbleChart() {
+        var width = 960,
+            height = 960,
+            maxRadius = 20,
+            columnForColors = "category",
+            columnForRadius = "fy2017";
+
+        function chart(selection) {
+            var data = selection.enter().data();
+            var div = selection,
+                svg = div.selectAll('svg');
+            svg.attr('width', width).attr('height', height);
+
+
+            var simulation = d3.forceSimulation(data)
+                .force("charge", d3.forceManyBody().strength([-300]))
+                .force("x", d3.forceX())
+                .force("y", d3.forceY())
+                .on("tick", ticked);
+
+            function ticked(e) {
+                node.attr("cx", function(d) {
+                        return d.x;
+                    })
+                    .attr("cy", function(d) {
+                        return d.y;
+                    });
+            }
+
+            var colorCircles = d3.scaleOrdinal(d3.schemeCategory10);
+            var scaleRadius = d3.scaleLinear().domain([d3.min(data, function(d) {
+                return +d[columnForRadius];
+            }), d3.max(data, function(d) {
+                return +d[columnForRadius];
+            })]).range([1, 100])
+
+            var node = svg.selectAll("circle")
+                .data(data)
                 .enter()
                 .append("circle")
+                .attr('r', function(d) {
+                    return scaleRadius(d[columnForRadius])
+                })
+                .style("fill", function(d) {
+                    return colorCircles(d[columnForColors])
+                })
+                .attr('transform', 'translate(' + [width / 2, height / 2] + ')');
+        }
 
-      var circleAttributes = circles.attr("cx", function(d) { return d / 10000})
-                              .attr("cy", 100)
-                              .attr("class", "hello")
-                              .attr("r", function(d) { return d / 100000});
-      console.log(education_json.operating_budget.data[1]);
-      document.getElementsByClassName('name')[0].innerHTML = education_json.operating_budget.data[0].name + " " + "Budget"
+        chart.width = function(value) {
+            if (!arguments.length) {
+                return width;
+            }
+            width = value;
+            return chart;
+        };
+
+        chart.height = function(value) {
+            if (!arguments.length) {
+                return height;
+            }
+            height = value;
+            return chart;
+        };
+
+
+        chart.columnForColors = function(value) {
+            if (!arguments.columnForColors) {
+                return columnForColors;
+            }
+            columnForColors = value;
+            return chart;
+        };
+
+        chart.columnForRadius = function(value) {
+            if (!arguments.columnForRadius) {
+                return columnForRadius;
+            }
+            columnForRadius = value;
+            return chart;
+        };
+
+        return chart;
+    }
+    console.log(thisYearsData);
+    var chart = bubbleChart().width(960).height(960);
+    d3.select('#main').data(thisYearsData).call(chart);
     </script>
 
   </body>
