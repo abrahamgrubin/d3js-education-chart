@@ -3,8 +3,17 @@
   </head>
   <body>
     <div id="main"><svg></svg></div>
+    <div id="chart2"><svg></svg></div>
+    <div id="chart3"><svg></svg></div>
+    <div id="sidebar"><svg></svg></div>
     <style>
       #base {
+      }
+      #sidebar {
+          position: absolute;
+          float: left;
+          width: 100px;
+          height: 100px;
       }
       .hello {
         stroke: #ff0000;
@@ -18,12 +27,36 @@
       var height = "600px";
       var externalFunds = education_json.external_funds_budget.data;
       var operatingBudget = education_json.operating_budget.data;
+      var selectedServiceIndicators = education_json.selected_service_indicators;
+      var departmentHistoryByAccount = education_json.department_history_by_account.data;
       var thisYearsData = [];
       var lastYearsData = [];
+      var selectedServiceIndicatorsArray = [];
+      var departmentHistoryByAccountArray = [];
+
+      selectedServiceIndicators.forEach(function(budget){
+          var count = 1;
+          if (budget['fy-0'] != 0 && typeof budget['fy-0'] === 'number' || budget['line_title'] != "total"){
+              count * 20;
+              count++;
+              selectedServiceIndicatorsArray.push({ 'fy2017': budget['fy-0'], 'name': budget['line_title'], 'id': count});
+          }
+      });
+
+      departmentHistoryByAccount.forEach(function(budget){
+          var count = 1;
+          if (budget['fy-0'] != 0 && typeof budget['fy-0'] === 'number' || budget['line_title'] != "total"){
+              count * 20;
+              count++;
+              departmentHistoryByAccountArray.push({ 'fy2017': budget['fy-0'], 'name': budget['line_title'], 'id': count});
+          }
+      });
+
+      console.log(departmentHistoryByAccount);
 
       externalFunds.forEach(function(budget){
           var count = 1;
-          if (budget['fy-0'] != 0){
+          if (budget['fy-0'] != 0 && budget['name'] != "total"){
               count * 20;
               count++;
               thisYearsData.push({ 'fy2017': budget['fy-0'], 'name': budget['name'], 'id': count});
@@ -34,7 +67,7 @@
         var width = 960,
             height = 960,
             maxRadius = 20,
-            columnForColors = "category",
+            columnForColors = "name",
             columnForRadius = "fy2017";
 
         function chart(selection) {
@@ -76,7 +109,10 @@
                 .style("fill", function(d) {
                     return colorCircles(d[columnForColors])
                 })
-                .attr('transform', 'translate(' + [width / 2, height / 2] + ')');
+                .attr('transform', 'translate(' + [width / 2, height / 2] + ')')
+                .on("click", function(d){
+                    document.getElementById("sidebar").innerHTML = d.name;
+                });
         }
 
         chart.width = function(value) {
@@ -114,9 +150,12 @@
 
         return chart;
     }
-    console.log(thisYearsData);
+
     var chart = bubbleChart().width(960).height(960);
+    var chart2 = bubbleChart().width(200).height(200);
     d3.select('#main').data(thisYearsData).call(chart);
+    d3.select('#chart2').data(selectedServiceIndicatorsArray).call(chart);
+    d3.select('#chart3').data(departmentHistoryByAccountArray).call(chart);
     </script>
 
   </body>

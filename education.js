@@ -47,7 +47,7 @@ var education_json = {
         "fy-1":1016278853,
         "fy-0":1031684005,
         "fy+1":1060932786
-      },
+    },
       {
         "name":"Total",
         "line_type":"total",
@@ -750,15 +750,15 @@ var education_json = {
         "fy-1":0,
         "fy-0":0,
         "fy+1":0
-      }
-      // {
-      //   "name":"Total",
-      //   "line_type":"total",
-      //   "fy-2":130369380,
-      //   "fy-1":125769705,
-      //   "fy-0":135341294,
-      //   "fy+1":137222587
-      // }
+    }//,
+    //   {
+    //     "name":"Total",
+    //     "line_type":"total",
+    //     "fy-2":130369380,
+    //     "fy-1":125769705,
+    //     "fy-0":135341294,
+    //     "fy+1":137222587
+    //   }
     ]
   },
   "selected_service_indicators":[
@@ -786,15 +786,15 @@ var education_json = {
       "fy-1":218046288,
       "fy-0":220767217,
       "fy+1":225828394
-    },
-    {
-      "line_title":"Total",
-      "line_type":"total",
-      "fy-2":974925118,
-      "fy-1":1016278853,
-      "fy-0":1031684005,
-      "fy+1":1060932786
-    }
+  }//,
+    // {
+    //   "line_title":"Total",
+    //   "line_type":"total",
+    //   "fy-2":974925118,
+    //   "fy-1":1016278853,
+    //   "fy-0":1031684005,
+    //   "fy+1":1060932786
+    // }
   ],
   "organizational_chart_graphic_url":"INSERT ORG CHART HERE",
   "authorizing_statutes":[
@@ -872,16 +872,16 @@ var education_json = {
         "fy-0":885566,
         "fy+1":886076,
         "diff":510
-      },
-      {
-        "line_title":"Total",
-        "line_type":"total",
-        "fy-2":974925118,
-        "fy-1":1016278853,
-        "fy-0":1031684005,
-        "fy+1":1060932786,
-        "diff":29248781
-      }
+    }//,
+    //   {
+    //     "line_title":"Total",
+    //     "line_type":"total",
+    //     "fy-2":974925118,
+    //     "fy-1":1016278853,
+    //     "fy-0":1031684005,
+    //     "fy+1":1060932786,
+    //     "diff":29248781
+    //   }
     ]
   },
   "external_funds":[
